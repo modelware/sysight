@@ -1,53 +1,42 @@
 # Sysight: SysML v2 Insight
 
-Sysight, by [Modelware](https://www.modelware.io), brings insight to SysML v2 and KerML models: a
-model server per workspace that reports diagnostics, evaluates expressions and verifies
-requirements, answers SPARQL queries, and serves your editor (VS Code), your pipeline (the
-command line) and your AI agents (MCP). The KerML 1.0 and SysML 2.0 standard libraries are built
-in.
-
-This repository holds Sysight's releases, documentation and issue tracker.
+Sysight, by [Modelware](https://www.modelware.io), checks, evaluates and queries SysML v2 and
+KerML models, from the command line, VS Code and AI agents (MCP). The standard libraries are
+built in.
 
 ## Install
 
+macOS, Linux:
+
 ```sh
-# macOS, Linux
 curl -fsSL https://github.com/modelware/sysight/releases/latest/download/install.sh | sh
 ```
 
+Windows (PowerShell):
+
 ```powershell
-# Windows (PowerShell)
 powershell -c "irm https://github.com/modelware/sysight/releases/latest/download/install.ps1 | iex"
 ```
 
-Runs on macOS (Apple silicon and Intel), Linux (x86-64 and ARM) and Windows (x86-64).
-`SYSIGHT_VERSION=X.Y.Z` installs a given version; downloads are checked against the release's
-`SHA256SUMS`. Or download an archive from the [latest release](https://github.com/modelware/sysight/releases/latest).
+VS Code: download the `.vsix` for your platform from the
+[latest release](https://github.com/modelware/sysight/releases/latest) and run
+*Extensions: Install from VSIX…*.
 
-**VS Code:** download the extension for your platform from the
-[latest release](https://github.com/modelware/sysight/releases/latest) (for example
-`sysight-darwin-arm64-<version>.vsix` on an Apple silicon Mac) and install it with
-*Extensions: Install from VSIX…*. It carries the `sysight` command.
+To update, run the install command again. To pin a version, set `SYSIGHT_VERSION=X.Y.Z`.
 
-Options, updating, uninstalling and troubleshooting: [INSTALL.md](INSTALL.md).
-
-## Get started
+## Use
 
 ```sh
 cd my-model
-sysight check                                   # diagnostics for the whole workspace
-sysight evaluate Vehicle::mass --unit kg        # evaluate an expression
-sysight query 'SELECT ?part WHERE { ?part a sysml:Part }'
-sysight help                                    # every command
+sysight check        # diagnostics
+sysight help         # all commands
 ```
 
-## Issues and questions
+## Issues
 
-Report bugs and ask for features in [Issues](https://github.com/modelware/sysight/issues). A
-small model that shows the problem, and the output of `sysight --version`, help a lot.
+[Report a bug or request a feature](https://github.com/modelware/sysight/issues).
 
 ## License
 
-Sysight is proprietary software, free to use directly by individuals and organizations,
-companies and consultants included. Reselling, redistributing, hosting it for others or building
+Free to use, including by companies and consultants. Reselling, redistributing or building
 products on it needs a license from Modelware (info@modelware.io). See [LICENSE.md](LICENSE.md).
