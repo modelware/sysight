@@ -6,6 +6,18 @@ built in.
 
 ## Install
 
+### VS Code extension
+
+1. From the [latest release](https://github.com/modelware/sysight/releases/latest), download the
+   `.vsix` for your platform: `darwin-arm64` (Apple silicon Mac), `darwin-x64` (Intel Mac),
+   `linux-x64`, `linux-arm64` or `win32-x64`.
+2. In VS Code, run **Extensions: Install from VSIX…** and pick the file.
+
+The extension includes the `sysight` command it needs. Open a folder with `.sysml` or `.kerml`
+files to start.
+
+### Command line
+
 macOS, Linux:
 
 ```sh
@@ -18,11 +30,8 @@ Windows (PowerShell):
 powershell -c "irm https://github.com/modelware/sysight/releases/latest/download/install.ps1 | iex"
 ```
 
-VS Code: download the `.vsix` for your platform from the
-[latest release](https://github.com/modelware/sysight/releases/latest) and run
-*Extensions: Install from VSIX…*.
-
-To update, run the install command again. To pin a version, set `SYSIGHT_VERSION=X.Y.Z`.
+To update, run the install command again (or install the new `.vsix`). To pin a version, set
+`SYSIGHT_VERSION=X.Y.Z`.
 
 ## Use
 
