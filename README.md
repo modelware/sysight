@@ -53,6 +53,27 @@ sysight check        # diagnostics
 sysight help         # all commands
 ```
 
+## Example
+
+The [Apollo 11 dashboard](https://www.modelware.io/apollo-11-sysml-v2/) is built from a SysML v2
+model of the mission, analyzed with Sysight: computed budgets, verified requirements and query
+results, published from CI.
+
+## Performance
+
+On the Apollo 11 model (28 files, about 7,200 lines, with the standard libraries: about 143,000
+facts), on an Apple M4:
+
+| | Time |
+|---|---|
+| First start, including the standard libraries | 1 s |
+| Later starts | 0.3 s |
+| Check the whole model, after an edit | 0.07 s |
+| A SPARQL query | 0.02 s |
+
+Times are for the `sysight` command, end to end. The server keeps the model loaded and updates
+it incrementally as files change.
+
 ## Issues
 
 [Report a bug or request a feature](https://github.com/modelware/sysight/issues).
