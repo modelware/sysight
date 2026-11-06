@@ -29,6 +29,8 @@ Runs on macOS (Apple silicon and Intel), Linux (x86-64 and ARM) and Windows (x86
 `sysight-darwin-arm64-<version>.vsix` on an Apple silicon Mac) and install it with
 *Extensions: Install from VSIX…*. It carries the `sysight` command.
 
+Options, updating, uninstalling and troubleshooting: [INSTALL.md](INSTALL.md).
+
 ## Get started
 
 ```sh
