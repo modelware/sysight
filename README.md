@@ -56,8 +56,8 @@ sysight help         # all commands
 ## Example
 
 The [Apollo 11 dashboard](https://www.modelware.io/apollo-11-sysml-v2/) is built from a SysML v2
-model of the mission, analyzed with Sysight: computed budgets, verified requirements and query
-results, published from CI.
+model of the mission with Sysight: the timeline, functions, mass and cost budgets, requirements
+and model quality, each computed from the model and published from CI.
 
 ## Performance
 
