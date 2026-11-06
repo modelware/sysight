@@ -30,6 +30,18 @@ Windows (PowerShell):
 powershell -c "irm https://github.com/modelware/sysight/releases/latest/download/install.ps1 | iex"
 ```
 
+### AI agents (MCP)
+
+Install the command line (above), then register `sysight mcp` with your agent, for example in
+Claude Code:
+
+```sh
+claude mcp add sysight -- sysight mcp --workspace /path/to/model
+```
+
+Other clients take the same command in their MCP configuration:
+`{"command": "sysight", "args": ["mcp", "--workspace", "/path/to/model"]}`.
+
 To update, run the install command again (or install the new `.vsix`). To pin a version, set
 `SYSIGHT_VERSION=X.Y.Z`.
 
