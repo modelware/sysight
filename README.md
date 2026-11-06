@@ -111,8 +111,29 @@ unsaved edits included.
 
 The [Apollo 11 dashboard](https://www.modelware.io/apollo-11-sysml-v2/) is built with Sysight
 from Airbus's [SysML v2 model of Apollo 11](https://github.com/airbus/apollo-11-sysml-v2): the
-timeline, functions, budgets, requirements, cost and model quality, each computed from the model
-and published from CI.
+timeline, functions, budgets, requirements, cost and model quality. Each page is a Jupyter
+notebook that queries the model's Sysight server and charts the answers; CI runs the notebooks
+and publishes them.
+
+The server speaks the SPARQL 1.1 protocol, so a notebook (or any program) sends it queries over
+HTTP. Its address is in the model's `.sysight/server.json` (`sysight inspect` shows it):
+
+```python
+import json, requests
+
+url = json.load(open(".sysight/server.json"))["url"] + "/query"
+query = """
+SELECT ?requirement (eval:verdict(?requirement) AS ?verdict) (eval:why(?requirement) AS ?why)
+WHERE { ?requirement a sysml:Requirement }
+"""
+answer = requests.post(url, data={"query": query},
+                       headers={"Accept": "application/sparql-results+json"}).json()
+for row in answer["results"]["bindings"]:
+    print(row["requirement"]["value"], row["verdict"]["value"])
+```
+
+The `kerml:`, `sysml:` and `eval:` prefixes need no declaring; `eval:` functions compute values
+and verdicts in the query. Answers also come as CSV (`Accept: text/csv`), ready for pandas.
 
 ## Performance
 
