@@ -58,32 +58,75 @@ To update, run the install command again (or install the new `.vsix`). To pin a 
 
 ## Use
 
+### In VS Code
+
+Open a folder with `.sysml` or `.kerml` files. As you type, Sysight checks the whole model
+(the Problems view), and gives navigation, completion, rename, formatting and highlighting.
+Hover an element for its computed value or a requirement's verdict; inlay hints show values and
+what the language implies.
+
+The **Sysight view**, docked beside the chat, is where you ask the model: write a SPARQL query
+at the bottom (with completion of the model's classes and properties) and see the answer as a
+table, chart or value. Queries are saved in the model's `queries/` folder, and conversations are
+kept as sessions. A `.rq` file opens in the view with *Run in Sysight*.
+
+### With AI agents
+
+VS Code's agents (such as Copilot in agent mode) get Sysight's tools from the extension, with
+nothing to set up: check *MCP: List Servers* for `sysight`.
+
+In Claude Code, register it once per model, then ask in plain words ("which requirements fail,
+and why?"):
+
+```sh
+claude mcp add sysight -- sysight mcp --workspace /path/to/model
+```
+
+Or add it to the model's `.mcp.json`, shared with everyone who opens it (other agents take the
+same command in their MCP configuration):
+
+```json
+{ "mcpServers": { "sysight": { "command": "sysight", "args": ["mcp"] } } }
+```
+
+The tools: `check`, `query` (SPARQL), `evaluate`, `verify`, `describe`, `export` and `update`.
+
+### On the command line
+
 ```sh
 cd my-model
-sysight check        # diagnostics
-sysight help         # all commands
+sysight check                                      # problems in the whole model
+sysight evaluate 'Vehicle::mass' --unit kg         # a value
+sysight verify 'Vehicle::massLimit'                # a constraint or requirement: satisfied?
+sysight query 'SELECT ?p WHERE { ?p a sysml:Part }' # anything, in SPARQL
+sysight export --format ttl                        # the model as RDF
+sysight help                                       # every command
 ```
+
+No configuration is needed: the folder is the model, and the standard libraries are built in.
+The editor, agents and commands share one server per model, so they all see the same model,
+unsaved edits included.
 
 ## Example
 
-The [Apollo 11 dashboard](https://www.modelware.io/apollo-11-sysml-v2/) is built from a SysML v2
-model of the mission with Sysight: the timeline, functions, mass and cost budgets, requirements
-and model quality, each computed from the model and published from CI.
+The [Apollo 11 dashboard](https://www.modelware.io/apollo-11-sysml-v2/) is built with Sysight
+from Airbus's [SysML v2 model of Apollo 11](https://github.com/airbus/apollo-11-sysml-v2): the
+timeline, functions, budgets, requirements, cost and model quality, each computed from the model
+and published from CI.
 
 ## Performance
 
 On the Apollo 11 model (28 files, about 7,200 lines, with the standard libraries: about 143,000
-facts), on an Apple M4:
+facts), on an Apple M4, end to end from the `sysight` command:
 
 | | Time |
 |---|---|
-| First start, including the standard libraries | 1 s |
-| Later starts | 0.3 s |
-| Check the whole model, after an edit | 0.07 s |
-| A SPARQL query | 0.02 s |
+| Check the whole model after an edit | 70 ms |
+| A SPARQL query | 20 ms |
+| Starting the model's server (once; it then stays running) | 0.3 s, 1 s the very first time |
 
-Times are for the `sysight` command, end to end. The server keeps the model loaded and updates
-it incrementally as files change.
+The server keeps the model loaded and updates it incrementally as files change, so the editor,
+agents and commands answer in milliseconds.
 
 ## Issues
 
