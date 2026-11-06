@@ -2,7 +2,7 @@
 
 Copyright 2026 Modelware (https://www.modelware.io). All rights reserved.
 
-Sysight (the `sysight` command, its VS Code extension and its GitHub Action) is proprietary
+Sysight (the `sysight` command and its VS Code extension) is proprietary
 software, made available free of charge under the terms below. These terms apply to the
 version they come with; later versions may come with different terms.
 

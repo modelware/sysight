@@ -42,6 +42,17 @@ claude mcp add sysight -- sysight mcp --workspace /path/to/model
 Other clients take the same command in their MCP configuration:
 `{"command": "sysight", "args": ["mcp", "--workspace", "/path/to/model"]}`.
 
+### CI
+
+In a GitHub Actions workflow (or any CI on macOS, Linux or Windows):
+
+```yaml
+- run: |
+    curl -fsSL https://github.com/modelware/sysight/releases/latest/download/install.sh | sh
+    echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+- run: sysight check
+```
+
 To update, run the install command again (or install the new `.vsix`). To pin a version, set
 `SYSIGHT_VERSION=X.Y.Z`.
 
