@@ -1,6 +1,6 @@
 # Sysight: SysML v2 Insight
 
-Sysight, by [Modelware](https://www.modelware.io), checks, evaluates and queries SysML v2 and
+[Sysight](https://www.modelware.io/sysight), by [Modelware](https://www.modelware.io), checks, evaluates and queries SysML v2 and
 KerML models, from the command line, VS Code and AI agents (MCP). The standard libraries are
 built in.
 
