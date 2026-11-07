@@ -111,11 +111,10 @@ unsaved edits included.
 
 The [Apollo 11 dashboard](https://www.modelware.io/apollo-11-sysml-v2/) is built with Sysight
 from Airbus's [SysML v2 model of Apollo 11](https://github.com/airbus/apollo-11-sysml-v2): the
-timeline, functions, budgets, requirements, cost and model quality. Each page is a Jupyter
-notebook that queries the model's Sysight server and charts the answers; CI runs the notebooks
-and publishes them.
+timeline, functions, budgets, requirements, cost and model quality. Each page was made with a
+Jupyter notebook that sends SPARQL queries to the model's Sysight server and charts the answers.
 
-The server speaks the SPARQL 1.1 protocol, so a notebook (or any program) sends it queries over
+The server speaks the SPARQL 1.1 protocol, so any notebook or program can send it queries over
 HTTP. Its address is in the model's `.sysight/server.json` (`sysight inspect` shows it):
 
 ```python
