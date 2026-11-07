@@ -136,14 +136,18 @@ and verdicts in the query. Answers also come as CSV (`Accept: text/csv`), ready 
 
 ## Performance
 
-On the Apollo 11 model (28 files, about 7,200 lines, with the standard libraries: about 143,000
-facts), on an Apple M4, end to end from the `sysight` command:
+On [Airbus's Apollo 11 model](https://github.com/airbus/apollo-11-sysml-v2) (28 files, about
+7,200 lines, with the standard libraries: about 143,000 facts), on an Apple M4, end to end from
+the `sysight` command:
 
-| | Time |
-|---|---|
-| Check the whole model after an edit | 70 ms |
-| A SPARQL query | 20 ms |
-| Starting the model's server (once; it then stays running) | 0.3 s, 1 s the very first time |
+| Operation | Cold (server starting) | Warm (server running) |
+|---|---:|---:|
+| Check the whole model | 121 ms | 24 ms |
+| Check after an edit | | 27 ms |
+| SPARQL query | 195 ms | 5 ms |
+
+The first run after installing or updating Sysight also prepares the standard libraries, once:
+about 1 s.
 
 The server keeps the model loaded and updates it incrementally as files change, so the editor,
 agents and commands answer in milliseconds.
