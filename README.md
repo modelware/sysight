@@ -70,6 +70,27 @@ at the bottom (with completion of the model's classes and properties) and see th
 table, chart or value. Queries are saved in the model's `queries/` folder, and conversations are
 kept as sessions. A `.rq` file opens in the view with *Run in Sysight*.
 
+The **graph view** draws the model's elements and relationships in an editor tab:
+
+- *Sysight: Open Model Graph* for the whole model, or a file or folder from the Explorer's
+  context menu;
+- *Sysight: Show in Graph* (in the editor's context menu) for an element and its neighbors;
+- *Open as graph* on any CONSTRUCT or DESCRIBE answer in the Sysight view, or *Open as Graph*
+  above such a query file.
+
+Hover an element to bring out its neighbors, click it for what it is and how it relates,
+double-click to open its declaration; search, expand an element's neighbors, and drag to pin.
+Settings filter what shows (ownership, library elements, orphans, each relationship), color by
+kind, package or file (with an optional legend), and set labels, arrows and forces. *Save*
+keeps the view, layout included, as a query file whose first line holds its settings:
+
+```sparql
+# graph: {"hide":["owns","library"],"color":"package","legend":true}
+CONSTRUCT { ?part kerml:typedBy ?def } WHERE { ?part a sysml:Part ; kerml:typedBy ?def }
+```
+
+Commit it with the model; *Reload* reads the file again.
+
 ### With AI agents
 
 VS Code's agents (such as Copilot in agent mode) get Sysight's tools from the extension, with
@@ -89,7 +110,9 @@ same command in their MCP configuration):
 { "mcpServers": { "sysight": { "command": "sysight", "args": ["mcp"] } } }
 ```
 
-The tools: `check`, `query` (SPARQL), `evaluate`, `verify`, `describe`, `export` and `update`.
+The tools: `check`, `query` (SPARQL), `evaluate`, `verify`, `describe`, `export`, `update`,
+and `graph`, which opens a graph in your editor ("show me how the requirements trace to the
+parts").
 
 ### On the command line
 
