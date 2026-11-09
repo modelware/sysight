@@ -44,7 +44,16 @@ on your machines, and this license gives Modelware no rights to them.
 
 Sysight is licensed, not sold. Modelware keeps all rights not expressly granted here.
 
-## 6. Third-party software and standard libraries
+## 6. Support
+
+Support for this free license is through the issue tracker of Sysight's public repository
+(https://github.com/modelware/sysight/issues), where you can report problems and ask
+questions. Modelware handles them as it sees fit, with no commitment to response times, fixes
+or future versions. Modelware offers enterprise support packages, with commitments such as
+these, under a separate agreement: write to info@modelware.io. Such an agreement does not
+change these terms unless it says so.
+
+## 7. Third-party software and standard libraries
 
 Sysight includes third-party software, each part under its own license, listed in the
 third-party notices that come with it (`sysight license --third-party`). Those licenses govern
@@ -54,22 +63,22 @@ Sysight includes the KerML and SysML v2 standard model libraries published by th
 Management Group (OMG) with the KerML 1.0 and SysML 2.0 specifications. They remain the
 property of their copyright holders and are provided under their terms.
 
-## 7. No warranty
+## 8. No warranty
 
 Sysight is provided "as is", without warranty of any kind, express or implied, including the
 warranties of merchantability, fitness for a particular purpose and non-infringement. You are
 responsible for checking the results it gives before relying on them.
 
-## 8. Limitation of liability
+## 9. Limitation of liability
 
 To the extent the applicable law allows, Modelware will not be liable for any damages arising
 from the use of or inability to use Sysight, whether direct, indirect, incidental, special,
 consequential or otherwise, even if advised of their possibility.
 
-## 9. Termination
+## 10. Termination
 
 This license ends automatically if you break its terms; you must then stop using Sysight and
-delete your copies. Sections 4 to 8 survive its end.
+delete your copies. Sections 4, 5 and 7 to 9 survive its end.
 
 ## Contact
 

@@ -175,9 +175,12 @@ about 1 s.
 The server keeps the model loaded and updates it incrementally as files change, so the editor,
 agents and commands answer in milliseconds.
 
-## Issues
+## Support
 
-[Report a bug or request a feature](https://github.com/modelware/sysight/issues).
+Sysight is free to use, and its standard support is through [issues](https://github.com/modelware/sysight/issues):
+report problems, request features and ask questions there. For organizations that need committed
+response times, priority fixes or help adopting it, Modelware offers enterprise support
+packages: info@modelware.io.
 
 ## License
 
