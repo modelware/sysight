@@ -3,68 +3,56 @@
 Welcome! This manual shows you how to use Sysight on your SysML v2 and KerML models. To install
 it, see the [README](README.md).
 
-New here? Read [The model and its server](#the-model-and-its-server), then jump to where you
-work: [VS Code](#in-vs-code), [AI agents](#with-ai-agents) or
-[the command line](#on-the-command-line).
-
 ## Contents
 
-- **[Getting started](#getting-started):** [The model and its server](#the-model-and-its-server)
-- **[Where you use it](#where-you-use-it):** [In VS Code](#in-vs-code) ·
-  [With AI agents](#with-ai-agents) · [On the command line](#on-the-command-line) ·
-  [Other editors](#other-editors)
-- **[Working with a model](#working-with-a-model):** [Values and verdicts](#values-and-verdicts) ·
-  [Queries](#queries) · [Graphs](#graphs) · [Changing the model](#changing-the-model) ·
-  [Text and RDF](#text-and-rdf)
-- **[Automating](#automating):** [Programs and notebooks](#programs-and-notebooks) ·
-  [In CI](#in-ci)
-- **[Reference](#reference):** [Commands](#commands) · [MCP tools](#mcp-tools) ·
-  [VS Code commands and settings](#vs-code-commands-and-settings) ·
-  [Query vocabulary](#query-vocabulary) · [Settings](#settings)
+- [Getting started](#getting-started)
+  - [Your model](#your-model)
+  - [In VS Code](#in-vs-code)
+  - [With AI agents](#with-ai-agents)
+  - [On the command line](#on-the-command-line)
+- [Using Sysight](#using-sysight)
+  - [Check your model](#check-your-model)
+  - [Compute values and verdicts](#compute-values-and-verdicts)
+  - [Ask questions](#ask-questions)
+  - [See it as a graph](#see-it-as-a-graph)
+  - [Change the model](#change-the-model)
+  - [Export and import](#export-and-import)
+  - [Use it from programs](#use-it-from-programs)
+  - [Check it in CI](#check-it-in-ci)
+- [Reference](#reference)
+  - [Commands](#commands)
+  - [MCP tools](#mcp-tools)
+  - [VS Code commands and settings](#vs-code-commands-and-settings)
+  - [Query vocabulary](#query-vocabulary)
+  - [Settings](#settings)
 
 ## Getting started
 
-What Sysight needs from you: very little.
+Open your model and use it from wherever you work.
 
-### The model and its server
+### Your model
 
 Your model is a folder of `.sysml` and `.kerml` files, and Sysight reads it with no setup.
 
-Open the folder in VS Code, or run a `sysight` command in it. The standard libraries are built
-in.
-
-One Sysight server per model keeps it loaded and current. VS Code, agents and commands all use
-it, so they see the same model, unsaved edits included, and answer in milliseconds.
+The standard libraries are built in. One Sysight server per model keeps it loaded and current,
+so VS Code, agents and commands all see the same model, unsaved edits included, and answer in
+milliseconds.
 
 - **The model's folder** is the nearest one upward with a `sysight.toml` (it can be empty), or
   else the folder you are in.
 - **The server starts and stops on its own:** it starts when needed and stops after 15 idle
   minutes. `sysight start` and `sysight stop` control it yourself.
-- **After updating Sysight,** run `sysight restart` if an editor is still connected.
-- **To see what's running:** `sysight inspect` for this model, `sysight status` for all.
-- **Staying up to date:** when a newer Sysight is out, a command in your terminal says so in
-  one line, with how to update. It checks GitHub at most once a day and sends nothing about your
+- **Staying up to date:** when a newer Sysight is out, a command in your terminal says so in one
+  line, with how to update. It checks GitHub at most once a day and sends nothing about your
   model; `SYSIGHT_NO_UPDATE_CHECK=1` turns it off. The VS Code extension updates itself.
-
-## Where you use it
-
-The same model in VS Code, with agents, in a terminal, or in another editor.
 
 ### In VS Code
 
-The Sysight extension checks your model as you type and shows values and verdicts where they are
-written.
+Open your model's folder, and Sysight checks it as you type.
 
-- **Problems** for the whole model, in the Problems view.
-- **Hover** for what an element is, its value, or a requirement's verdict and why.
-- **Inline hints** with computed values (`= 2214000 kg`) and what the language implies.
-- **Navigation, rename, completion and formatting**, across files and into the libraries.
-- **The Sysight panel**, next to the chat: ask in SPARQL and see tables, charts and values (see
-  [Queries](#queries)).
-- **The graph view** (see [Graphs](#graphs)).
-- **This manual:** *Sysight: Open Manual*, or the book icon in the panel.
-
-Commands and settings: [VS Code commands and settings](#vs-code-commands-and-settings).
+You get problems in the Problems view, values and verdicts on hover and inline, navigation,
+rename, completion and formatting, the Sysight panel for questions, and the graph view. This
+manual opens with *Sysight: Open Manual*, or the book icon in the panel.
 
 ### With AI agents
 
@@ -85,54 +73,59 @@ command:
 { "mcpServers": { "sysight": { "command": "sysight", "args": ["mcp"] } } }
 ```
 
-Then ask in plain words: "Which requirements fail, and why?" or "Show me how the requirements
-trace to the parts." The tools are listed in [MCP tools](#mcp-tools).
+Then ask in plain words: "Which requirements fail, and why?"
 
 ### On the command line
 
-The `sysight` command checks, computes and queries your model from a terminal.
+The `sysight` command works in any terminal, in your model's folder.
 
 ```sh
-sysight check                                       # problems in the whole model
-sysight evaluate 'Vehicle::mass' --unit kg          # a value
-sysight verify 'Vehicle::massLimit'                 # is this requirement met?
-sysight query 'SELECT ?p WHERE { ?p a sysml:Part }' # anything, in SPARQL
+sysight check      # problems in the whole model
+sysight help       # every command
 ```
 
-`sysight help` lists the commands; they are also in [Commands](#commands).
-
-### Other editors
-
-Any editor with Language Server Protocol support can use Sysight by running `sysight attach`.
-
-For example, Neovim:
+Other editors with Language Server Protocol support can use Sysight too, by running
+`sysight attach`. For example, Neovim:
 
 ```lua
 vim.lsp.config('sysight', { cmd = { 'sysight', 'attach' }, filetypes = { 'sysml', 'kerml' }, root_markers = { 'sysight.toml', '.git' } })
 vim.lsp.enable('sysight')
 ```
 
-## Working with a model
+## Using Sysight
 
-Computing, asking, drawing and changing.
+The things you can do with your model, wherever you work.
 
-### Values and verdicts
+### Check your model
+
+Sysight checks your whole model for problems: syntax, names that do not resolve, the language's
+rules, and constraints or requirements that fail.
+
+- **In VS Code**, problems appear in the Problems view as you type, for every file, open or not.
+- **On the command line:** `sysight check`, or `sysight check <files>` for some files only.
+- **Agents** use the `check` tool, and check again after changing the model.
+
+### Compute values and verdicts
 
 Sysight computes your model's values, with units, and decides whether constraints and
 requirements are met.
 
-```sh
-sysight evaluate 'Vehicle::mass' --unit kg
-sysight verify 'Vehicle::massLimit'
-```
+- **In VS Code**, hover over an element for its value or verdict, and see values inline
+  (`= 2214000 kg`).
+- **On the command line:**
 
-A verdict is **satisfied**, **violated** or **undetermined**, with the reason.
+  ```sh
+  sysight evaluate 'Vehicle::mass' --unit kg
+  sysight verify 'Vehicle::massLimit'
+  ```
 
-- Evaluate an expression inside an element: `sysight evaluate 'e1.thrust * 2' --context 'M::Rocket'`.
-- Units are checked: a mass asked for in metres is an error, not a wrong number.
-- The same values and verdicts appear in hover, in the Problems view, in queries and for agents.
+- **Agents** use the `evaluate` and `verify` tools.
 
-### Queries
+A verdict is **satisfied**, **violated** or **undetermined**, with the reason. Units are checked:
+a mass asked for in metres is an error, not a wrong number. To evaluate an expression inside an
+element: `sysight evaluate 'e1.thrust * 2' --context 'M::Rocket'`.
+
+### Ask questions
 
 Ask your model anything in SPARQL, with values and verdicts in the answers.
 
@@ -141,6 +134,13 @@ SELECT ?requirement (eval:verdict(?requirement) AS ?verdict) (eval:why(?requirem
 WHERE { ?requirement a sysml:Requirement }
 ```
 
+- **In VS Code**, write it at the bottom of the Sysight panel and see the answer as a table, a
+  chart or a value. Your queries and sessions are kept.
+- **On the command line:** `sysight query '<query>'`, or `sysight query @queries/<name>.rq`.
+- **Agents** use the `query` tool, or just ask in plain words.
+
+Queries are easy to write:
+
 - **Familiar names:** classes follow the keywords (`sysml:Part`, `sysml:Requirement`), relations
   the notation (`kerml:typedBy`, `kerml:ownedFeature`).
 - **No prefixes to declare:** `kerml:`, `sysml:` and `eval:` are ready.
@@ -148,10 +148,9 @@ WHERE { ?requirement a sysml:Requirement }
 - **Shortcuts and functions** such as `sysml:satisfies` and `eval:value` (see
   [Query vocabulary](#query-vocabulary)).
 
-Save queries as `.rq` files in the model's `queries` folder. The panel lists them, and
-`sysight query @queries/<name>.rq` runs one.
+Save queries as `.rq` files in the model's `queries` folder, to keep them with the model.
 
-### Graphs
+### See it as a graph
 
 See your model as a graph in VS Code, and explore how its elements relate.
 
@@ -159,12 +158,13 @@ See your model as a graph in VS Code, and explore how its elements relate.
   Explorer).
 - *Sysight: Show in Graph* (right-click in the editor) draws an element and its neighbors.
 - *Open as graph* draws a CONSTRUCT or DESCRIBE answer from the panel.
-- Agents can show you one too.
+- **Agents** can show you one with the `graph` tool: "show me how the requirements trace to the
+  parts".
 
 Hover to highlight neighbors, double-click to open an element, drag to pin. *Save* keeps the
 view, layout included, as a query file to commit with the model.
 
-### Changing the model
+### Change the model
 
 Name what to change, and Sysight edits the files for you, touching only that.
 
@@ -181,7 +181,8 @@ Name what to change, and Sysight edits the files for you, touching only that.
 ]}
 ```
 
-- **create** adds members to an element, next to another (`after`, `before`), or to a file.
+- **create** adds members to an element, next to another (`after`, `before`), or to a file (a
+  new file is created).
 - **set** changes one property: `value`, `multiplicity`, `typedBy`, `specializes`, `doc`,
   `isAbstract`, and more. `null` removes it.
 - **rename** renames an element and every reference to it.
@@ -193,7 +194,7 @@ Name what to change, and Sysight edits the files for you, touching only that.
 Changes apply all or nothing, and the answer shows each file's diff and the problems added or
 fixed. `--dry-run` previews them; `--if-version <n>` refuses them if the model changed since.
 
-### Text and RDF
+### Export and import
 
 Save your model as standard notation or RDF, and bring models in from RDF or a `.kpar` archive.
 
@@ -206,11 +207,7 @@ sysight import model.trig         # add files from RDF or a .kpar archive
 `//` notes are not part of the model, so exports leave them out. `import` never overwrites your
 files unless you add `--force`.
 
-## Automating
-
-Your model in programs, notebooks and CI.
-
-### Programs and notebooks
+### Use it from programs
 
 Any program or notebook can query and change your model over HTTP.
 
@@ -244,7 +241,7 @@ curl -s "$URL/query" -H 'Accept: text/csv' --data-urlencode 'query=SELECT ?p WHE
 **Keep your queries in the model,** as `.rq` files in `queries/`, and pass values with a
 `VALUES` clause added at the end (`VALUES ?name { "dryMass" }`).
 
-**Changes** go to `/update`, as the JSON of [Changing the model](#changing-the-model). Pass the
+**Changes** go to `/update`, as the JSON of [Change the model](#change-the-model). Pass the
 version you read from `/inspect`, so a change made meanwhile by someone else is refused:
 
 ```python
@@ -257,7 +254,7 @@ requests.post(f"{url}/update", json=change).raise_for_status()
 Answers come as JSON, CSV, TSV or XML. `/check`, `/evaluate`, `/verify`, `/export` and
 `/inspect` work like the commands.
 
-### In CI
+### Check it in CI
 
 Check your model, and its requirements, on every change.
 
