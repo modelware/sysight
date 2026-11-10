@@ -26,7 +26,7 @@ built in.
 
 ### VS Code extension
 
-Install **Sysight: SysML v2 Insight** (`modelware.sysight`) from the Extensions view, from the
+Install **Sysight** (`modelware.sysight`) from the Extensions view, from the
 [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=modelware.sysight), or,
 in VSCodium, Cursor and other editors that use it, from
 [Open VSX](https://open-vsx.org/extension/modelware/sysight). Updates install automatically.
