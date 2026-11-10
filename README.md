@@ -4,17 +4,40 @@
 KerML models, from the command line, VS Code and AI agents (MCP). The standard libraries are
 built in.
 
+## Highlights
+
+- **The whole model checked as you type**: syntax, names, the specification's rules, and the
+  constraints and requirements that fail, across every file.
+- **Values and verdicts where they are written**: attribute values, roll-ups and units
+  computed, and each requirement satisfied, violated or undetermined, with why.
+- **Ask anything in SPARQL**: in the editor's panel, as tables, charts and values, with
+  completion of the model's classes and properties, and functions that compute values and
+  verdicts inside a query.
+- **The model as a graph**: elements and relationships drawn in an editor tab, to explore,
+  filter and save with the model.
+- **Agents that work on the live model**: MCP tools to read, compute, change and show graphs,
+  with every change answered by its diff and the problems it added or removed.
+- **One model for everyone**: the editor, agents, the command line, CI and your own programs
+  (over HTTP) share one server per model, unsaved edits included, answering in milliseconds.
+- **No configuration, no lock-in**: the folder is the model, the files stay the model, and it
+  converts to and from RDF.
+
 ## Install
 
 ### VS Code extension
 
-1. From the [latest release](https://github.com/modelware/sysight/releases/latest), download the
-   `.vsix` for your platform: `darwin-arm64` (Apple silicon Mac), `darwin-x64` (Intel Mac),
-   `linux-x64`, `linux-arm64` or `win32-x64`.
-2. In VS Code, run **Extensions: Install from VSIX…** and pick the file.
+Install **Sysight: SysML v2 Insight** (`modelware.sysight`) from the Extensions view, from the
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=modelware.sysight), or,
+in VSCodium, Cursor and other editors that use it, from
+[Open VSX](https://open-vsx.org/extension/modelware/sysight). Updates install automatically.
 
 The extension includes the `sysight` command it needs. Open a folder with `.sysml` or `.kerml`
 files to start.
+
+Without access to a marketplace, download the `.vsix` for your platform from the
+[latest release](https://github.com/modelware/sysight/releases/latest) (`darwin-arm64`,
+`darwin-x64`, `linux-x64`, `linux-arm64` or `win32-x64`) and run **Extensions: Install from
+VSIX…**.
 
 ### Command line
 
@@ -53,109 +76,29 @@ In a GitHub Actions workflow (or any CI on macOS, Linux or Windows):
 - run: sysight check
 ```
 
-To update, run the install command again (or install the new `.vsix`). To pin a version, set
+To update the command, run the install command again. To pin a version, set
 `SYSIGHT_VERSION=X.Y.Z`.
 
-## Use
-
-### In VS Code
-
-Open a folder with `.sysml` or `.kerml` files. As you type, Sysight checks the whole model
-(the Problems view), and gives navigation, completion, rename, formatting and highlighting.
-Hover an element for its computed value or a requirement's verdict; inlay hints show values and
-what the language implies.
-
-The **Sysight view**, docked beside the chat, is where you ask the model: write a SPARQL query
-at the bottom (with completion of the model's classes and properties) and see the answer as a
-table, chart or value. Queries are saved in the model's `queries/` folder, and conversations are
-kept as sessions. A `.rq` file opens in the view with *Run in Sysight*.
-
-The **graph view** draws the model's elements and relationships in an editor tab:
-
-- *Sysight: Open Model Graph* for the whole model, or a file or folder from the Explorer's
-  context menu;
-- *Sysight: Show in Graph* (in the editor's context menu) for an element and its neighbors;
-- *Open as graph* on any CONSTRUCT or DESCRIBE answer in the Sysight view, or *Open as Graph*
-  above such a query file.
-
-Hover an element to bring out its neighbors, click it for what it is and how it relates,
-double-click to open its declaration; search, expand an element's neighbors, and drag to pin.
-Settings filter what shows (ownership, library elements, orphans, each relationship), color by
-kind, package or file (with an optional legend), and set labels, arrows and forces. *Save*
-keeps the view, layout included, as a query file whose first line holds its settings:
-
-```sparql
-# graph: {"hide":["owns","library"],"color":"package","legend":true}
-CONSTRUCT { ?part kerml:typedBy ?def } WHERE { ?part a sysml:Part ; kerml:typedBy ?def }
-```
-
-Commit it with the model; *Reload* reads the file again.
-
-### With AI agents
-
-VS Code's agents (such as Copilot in agent mode) get Sysight's tools from the extension, with
-nothing to set up: check *MCP: List Servers* for `sysight`.
-
-In Claude Code, register it once per model, then ask in plain words ("which requirements fail,
-and why?"):
-
-```sh
-claude mcp add sysight -- sysight mcp --workspace /path/to/model
-```
-
-Or add it to the model's `.mcp.json`, shared with everyone who opens it (other agents take the
-same command in their MCP configuration):
-
-```json
-{ "mcpServers": { "sysight": { "command": "sysight", "args": ["mcp"] } } }
-```
-
-The tools: `check`, `query` (SPARQL), `evaluate`, `verify`, `describe`, `export`, `update`,
-and `graph`, which opens a graph in your editor ("show me how the requirements trace to the
-parts").
-
-### On the command line
+## Get started
 
 ```sh
 cd my-model
 sysight check                                      # problems in the whole model
 sysight evaluate 'Vehicle::mass' --unit kg         # a value
-sysight verify 'Vehicle::massLimit'                # a constraint or requirement: satisfied?
 sysight query 'SELECT ?p WHERE { ?p a sysml:Part }' # anything, in SPARQL
-sysight export --format ttl                        # the model as RDF
-sysight help                                       # every command
 ```
 
-No configuration is needed: the folder is the model, and the standard libraries are built in.
-The editor, agents and commands share one server per model, so they all see the same model,
-unsaved edits included.
+The [manual](MANUAL.md) covers using Sysight in VS Code, with agents, on the command line, in
+CI and from programs (its HTTP API): queries, values and verdicts, graphs, changing the model,
+and settings. Agents read it too, through the MCP tool `manual`, and `sysight manual` prints it.
 
 ## Example
 
 The [Apollo 11 dashboard](https://www.modelware.io/apollo-11-sysml-v2/) is built with Sysight
 from Airbus's [SysML v2 model of Apollo 11](https://github.com/airbus/apollo-11-sysml-v2): the
 timeline, functions, budgets, requirements, cost and model quality. Each page was made with a
-Jupyter notebook that sends SPARQL queries to the model's Sysight server and charts the answers.
-
-The server speaks the SPARQL 1.1 protocol, so any notebook or program can send it queries over
-HTTP. Its address is in the model's `.sysight/server.json` (`sysight inspect` shows it):
-
-```python
-import json, requests
-
-url = json.load(open(".sysight/server.json"))["url"] + "/query"
-query = """
-SELECT ?requirement (eval:verdict(?requirement) AS ?verdict) (eval:why(?requirement) AS ?why)
-WHERE { ?requirement a sysml:Requirement }
-"""
-answer = requests.post(url, data={"query": query},
-                       headers={"Accept": "application/sparql-results+json"}).json()
-for row in answer["results"]["bindings"]:
-    print(row["requirement"]["value"], row["verdict"]["value"])
-```
-
-The `kerml:`, `sysml:` and `eval:` prefixes need no declaring; `eval:` functions compute values
-and verdicts in the query. Answers also come as CSV (`Accept: text/csv`), ready for pandas.
+Jupyter notebook that sends SPARQL queries to the model's Sysight server and charts the answers
+(see the manual's [Programs and notebooks](MANUAL.md#programs-and-notebooks)).
 
 ## Performance
 
@@ -172,8 +115,8 @@ the `sysight` command:
 The first run after installing or updating Sysight also prepares the standard libraries, once:
 about 1 s.
 
-The server keeps the model loaded and updates it incrementally as files change, so the editor,
-agents and commands answer in milliseconds.
+The model stays loaded and current as files change, so the editor, agents and commands answer
+in milliseconds.
 
 ## Support
 
