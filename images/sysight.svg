@@ -1,0 +1,38 @@
+<svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="320" y2="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#16233c"/><stop offset="0.7" stop-color="#0a1322"/>
+    </linearGradient>
+    <radialGradient id="glow-tl" cx="0.18" cy="0.12" r="0.9">
+      <stop offset="0" stop-color="#0fb9a8" stop-opacity="0.28"/><stop offset="0.55" stop-color="#0fb9a8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-br" cx="0.88" cy="0.9" r="0.95">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.30"/><stop offset="0.55" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="76" y1="76" x2="244" y2="244" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0fb9a8"/><stop offset="0.55" stop-color="#6ee7db"/><stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="316" height="316" rx="70" fill="url(#tile)"/>
+  <rect x="2" y="2" width="316" height="316" rx="70" fill="url(#glow-tl)"/>
+  <rect x="2" y="2" width="316" height="316" rx="70" fill="url(#glow-br)"/>
+  <rect x="3.5" y="3.5" width="313" height="313" rx="68.5" stroke="#6ee7db" stroke-opacity="0.22" stroke-width="3"/>
+  <g stroke="url(#edge)" stroke-width="6" filter="url(#glow)" stroke-linecap="round">
+    <path d="M222 92 L160 62 L98 92 L98 130 L160 160 L222 190 L222 228 L160 258 L98 228"/>
+  </g>
+  <g filter="url(#glow)">
+    <circle cx="222" cy="92" r="11" fill="#6ee7db"/>
+    <circle cx="160" cy="62" r="11" fill="#0fb9a8"/>
+    <circle cx="98" cy="92" r="11" fill="#0fb9a8"/>
+    <circle cx="98" cy="130" r="11" fill="#0fb9a8"/>
+    <circle cx="222" cy="190" r="11" fill="#8b5cf6"/>
+    <circle cx="222" cy="228" r="11" fill="#8b5cf6"/>
+    <circle cx="160" cy="258" r="11" fill="#8b5cf6"/>
+    <circle cx="98" cy="228" r="11" fill="#8b5cf6"/>
+      <circle cx="160" cy="160" r="15" fill="#ffffff"/>
+      <circle cx="160" cy="160" r="15" stroke="url(#edge)" stroke-width="5" fill="none"/>
+  </g>
+</svg>

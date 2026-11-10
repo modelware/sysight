@@ -1,4 +1,11 @@
-# Sysight: SysML v2 Insight
+<p align="center"><img src="images/sysight.svg" width="96" alt="Sysight"></p>
+
+<h1 align="center">Sysight: SysML v2 Insight</h1>
+
+<p align="center">
+  <a href="https://github.com/modelware/sysight/releases/latest"><img src="https://img.shields.io/github/v/release/modelware/sysight?label=release" alt="Latest release"></a>
+  <a href="MANUAL.md"><img src="https://img.shields.io/badge/manual-read-4C78A8" alt="Manual"></a>
+</p>
 
 [Sysight](https://www.modelware.io/sysight), by [Modelware](https://www.modelware.io), checks, evaluates and queries SysML v2 and
 KerML models, from the command line, VS Code and AI agents (MCP). The standard libraries are
